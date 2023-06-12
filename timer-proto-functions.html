@@ -14,27 +14,38 @@
     <h1 id="app">Count Down from 10</h1>
     <div id="alert alert-success" role="alert">
         <script>
-            // Variable count, ihr Wert ist noch undefined.
-            // max count
-            // Wird zum Stoppen von setInterval() verwendet.
+            var count; // Variable count, ihr Wert ist noch undefined.
+            var maxCount = 10; // max count; ganze Zahl (integer); in Sekunden
+            var timerId; // Wird zum Stoppen von setInterval() verwendet.
             
-            function startCountdown() {
+            function startCountdown() {           
+                stopCountdown(); // Falls es schoen einen Timer gibt: zuerst stoppen.
+                setDisplay(maxCount); // Set Display
+                count = maxCount; // count in Anfangzustand setzen.
+
+            // Verwende die Referenz 'updateCounter', um die Funktion für später zu registrieren.
+            timerId = setInterval(updateCounter, 1000) //Jede Sekunde aktualisiere den Zähler und die Anzeige.
             }
-                //
-                //
-                //
 
             function stopCountdown() {
-
+                //JavaScript Funktion clearInterval() aufrufen
+                clearInterval(timerId);
             }
-
+                
             function updateCounter() {
+                count = count -1;
+                setDisplay(count);
+
+                if (count === 0) { // count is the same type as 0 AND count equals 0
+                    stopCountdown();
+                    setDisplay("Fertig!")
+                }
 
             }
 
-            function setDisplay(info) {
-            }
-            
+            function setDisplay(info) { // 'info' kann z.Bsp ein String oder eine Zahl sein.
+                document.getElementById("display").innerHTML = info;     
+        }
         </script>
 
         <p id="display">&nbsp;</p>
