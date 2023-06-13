@@ -14,17 +14,17 @@
     <h1 id="app">Count Down from 10</h1>
     <div id="alert alert-success" role="alert">
         <script>
-            var count; // Variable count, ihr Wert ist noch undefined.
-            var maxCount = 10; // max count; ganze Zahl (integer); in Sekunden
-            var timerId; // Wird zum Stoppen von setInterval() verwendet.
+            var count; // Variable count, ihr Wert ist noch undefined. / (ENG) Variable count, its value is still undefined.
+            var maxCount =120; // max count; ganze Zahl (integer); in Sekunden / (ENG) max count; integer; in seconds
+            var timerId; // Wird zum Stoppen von setInterval() verwendet. / (ENG) Used to stop setInterval().
             
             function startCountdown() {           
-                stopCountdown(); // Falls es schoen einen Timer gibt: zuerst stoppen.
+                stopCountdown(); // Falls es schoen einen Timer gibt: zuerst stoppen. / (ENG) If there is a timer: stop first.
                 setDisplay(maxCount); // Set Display
-                count = maxCount; // count in Anfangzustand setzen.
+                count = maxCount; // count in Anfangzustand setzen. / (ENG) Set count to initial state. 
 
-            // Verwende die Referenz 'updateCounter', um die Funktion für später zu registrieren.
-            timerId = setInterval(updateCounter, 1000) //Jede Sekunde aktualisiere den Zähler und die Anzeige.
+            // Verwende die Referenz 'updateCounter', um die Funktion für später zu registrieren. / (ENG) Use the reference 'updateCounter' to register the function for later.
+            timerId = setInterval(updateCounter, 1000) //Jede Sekunde aktualisiere den Zähler und die Anzeige. / (ENG) Every second, update the counter and the display.
             }
 
             function stopCountdown() {
@@ -46,9 +46,28 @@
             function setDisplay(info) { // 'info' kann z.Bsp ein String oder eine Zahl sein.
                 document.getElementById("display").innerHTML = info;     
         }
+
+            function getSecondsInput(){
+                let value = document.getElementById("seconds").value; // value is a String
+                return parseInt(value); // Mit parseInt() den String in eine ganze Zahl umwandeln.  / (ENG) Convert the string into an integer with parseInt().  
+            }
+
+            function secondsToTimeString() {
+                let minutes = Math.floor(seconds / 60);
+                let hours = Math.floor (minutes / 60);
+
+                return timeToString(hours, minutes, seconds % 60);
+            }
+
+            function timeToString(hours, minutes, seconds) {
+                return hours.toString().padStart(2, "0") + ":" + 
+                       minutes.toString().padStart(2, "0") + ":" + 
+                       seconds.toString().padStart(2, "0");
+        }
+        
         </script>
 
-        <p id="display">&nbsp;</p>
+        <p id="display" style="font-size: xx-large;">&nbsp;</p>
 
         <button type="button" 
             class="btn btn-primary" 
@@ -59,7 +78,12 @@
             class="btn btn-success" 
             id="stopButton" 
             onclick="stopCountdown();">STOP</button>
-    </div>
+<!--
+        <form>
+            <input type="number" id="seconds" value="20" style="width: 50px;" margin-top="20px;">
+            <label>sec</label> 
+        </form>
+        -->
     </div>
 </body>
 </html>
