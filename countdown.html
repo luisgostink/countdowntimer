@@ -104,35 +104,68 @@
             </div>
             -->
             <div>
-              <div class="minutes num-container" id="minute"></div>
+              <div class="minutes num-container" id="minute">00</div>
               <div class="smalltext">Minutes</div>
             </div>
             <div>
-              <div class="seconds num-container" id="second"></div>
+                <div class="minutes num-container" id="points">:</div>
+              </div>
+
+            <div>
+              <div class="seconds num-container" id="second">00</div>
               <div class="smalltext">Seconds</div>
             </div>
           </div>
 
+          
+          <p id="second" style="font-size: xx-large;">&nbsp;</p>
+          
+          
+          <!-- Buttons -->
+          <button type="button" 
+          class="btn btn-success btn-size" 
+          id="startButton" 
+          onclick="startCountdown(this);">START</button>
+          
+          <button type="button" 
+          class="btn btn-danger btn-size" 
+          id="stopButton" 
+          onclick="stopCountdown(this);">STOP</button>
+          
+          <button type="button" 
+          class="btn btn-warning buttons btn-size" 
+          id="resetButton" 
+          onclick="resetButton(this);">RESET</button>
+        </div>
+    </div>  
+    
           <script>
             var count; // Variable count, ihr Wert ist noch undefined. / (ENG) Variable count, its value is still undefined.
             var maxCount =120; // max count; ganze Zahl (integer); in Sekunden / (ENG) max count; integer; in seconds
             var timerId; // Wird zum Stoppen von setInterval() verwendet. / (ENG) Used to stop setInterval().
             
-            function startCountdown() {           
+            function startCountdown() {    
                 stopCountdown(); // Falls es schoen einen Timer gibt: zuerst stoppen. / (ENG) If there is a timer: stop first.
                 setDisplay(maxCount); // Set Display
                 count = maxCount; // count in Anfangzustand setzen. 
                                   // (ENG) Set count to initial state. 
+                
 
-            // Verwende die Referenz 'updateCounter', um die Funktion für später zu registrieren. / (ENG) Use the reference 'updateCounter' to register the function for later.
-            timerId = setInterval(updateCounter, 1000) //Jede Sekunde aktualisiere den Zähler und die Anzeige. 
-                                                      //(ENG) Every second, update the counter and the display.
+            // Verwende die Referenz 'updateCounter', um die Funktion für später zu registrieren. // 
+            //(ENG) Use the reference 'updateCounter' to register the function for later.
+            timerId = setInterval(updateCounter, 1000) //Jede Sekunde aktualisiere den Zähler und die Anzeige.// 
+                                                      //(ENG) Every second, update the counter and the display.//
             }
 
             function setDisplay(info) { // 'info' kann z.Bsp ein String oder eine Zahl sein.
-                document.getElementById("second").innerHTML = info;  
-            let minutes = Math.floor(info / 60);
-                document.getElementById("minute").innerHTML = info;
+                // document.getElementById("second").innerHTML = info; 
+
+
+                let minutes = secondsToMinutes(info);  
+                var remainingSeconds = info % 60;
+
+                document.getElementById("minute").innerHTML = minutes;
+                document.getElementById("second").innerHTML = remainingSeconds;
             }
 
             function stopCountdown() {
@@ -144,9 +177,11 @@
                 count = count -1;
                 setDisplay(count);
 
-                if (count === 0) { // count is the same type as 0 AND count equals 0
+                if (count <= 0) { // count is the same type as 0 AND count equals 0
                     stopCountdown();
-                    setDisplay("Fertig!")
+//                    document.getElementById("fertig").innerHTML = "Fertig!";
+                    document.getElementById("minute").innerHTML= 00;
+                    document.getElementById("second").innerHTML= 00;
                 }
             }
 
@@ -155,11 +190,11 @@
                 return parseInt(value); // Mit parseInt() den String in eine ganze Zahl umwandeln.  / (ENG) Convert the string into an integer with parseInt().  
             }
 
-            function secondsToMinutes() {
+            function secondsToMinutes(seconds) {
                 let minutes = Math.floor(seconds / 60);
-                let hours = Math.floor (minutes / 60);
-
-                return timeToString(hours, minutes, seconds % 60);
+                //let hours = Math.floor (minutes / 60);//
+                //return timeToString(minutes);//
+                return minutes; 
             }
 
             function timeToString(hours, minutes, seconds) {
@@ -168,30 +203,6 @@
                        seconds.toString().padStart(2, "0");
         }
 
-        /*  function resetButton */      
-
 </script>
-
-        <p id="second" style="font-size: xx-large;">&nbsp;</p>
-
-         
-        <!-- Buttons -->
-        <button type="button" 
-            class="btn btn-success btn-size" 
-            id="startButton" 
-            onclick="startCountdown(this);">START</button>
-
-        <button type="button" 
-            class="btn btn-danger btn-size" 
-            id="stopButton" 
-            onclick="stopCountdown(this);">STOP</button>
-
-            <button type="button" 
-            class="btn btn-warning buttons btn-size" 
-            id="resetButton" 
-            onclick="resetButton(this);">RESET</button>
-    </div>
-</div>  
-    
 </body>
 </html>
